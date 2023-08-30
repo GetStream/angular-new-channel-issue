@@ -1,3 +1,8 @@
-Angular chat sample application using Angular 16
+# ChatExample
 
-To run it, copy your credentials to `app.component.ts`. You can grab the credentials from [the Angular tutorial](https://getstream.io/chat/angular/tutorial/).
+Running the app:
+
+- Run `npm install` (preferred node version: v16)
+- Provide your credentials in `app.component.ts` (you can use [Stream's token generator](https://getstream.io/chat/docs/react/token_generator/) to create a static token for testing)
+- Provide `members` for the channel creation in `app.component.ts` line 34
+- Run `npm start`
