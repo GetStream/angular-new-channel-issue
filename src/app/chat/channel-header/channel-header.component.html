@@ -1,0 +1,26 @@
+<div class="str-chat__header-livestream str-chat__channel-header">
+  <div class="str-chat__header-hamburger" (click)="toggleMenu($event)" (keyup.enter)="toggleMenu($event)">
+    <app-icon-placeholder icon="menu"></app-icon-placeholder>
+  </div>
+  <ng-content></ng-content>
+  <app-avatar-placeholder
+    imageUrl="{{ activeChannel?.data?.image }}"
+    name="{{ avatarName }}"
+    type="channel"
+    location="channel-header"
+    [channel]="activeChannel"
+    [size]="44"
+  ></app-avatar-placeholder>
+  <div class="str-chat__header-livestream-left str-chat__channel-header-end">
+    <p data-testid="name" class="str-chat__header-livestream-left--title str-chat__channel-header-title">
+      {{ displayText }}
+    </p>
+    <p data-testid="info" class="str-chat__header-livestream-left--members str-chat__channel-header-info">
+      {{'streamChat.{{ memberCount }} members' | translate:memberCountParam}}
+      {{canReceiveConnectEvents ? ('streamChat.{{ watcherCount }} online' | translate:watcherCountParam) : ''}}
+    </p>
+  </div>
+  <ng-container *ngIf="channelActionsTemplate">
+    <ng-container *ngTemplateOutlet="channelActionsTemplate; context: getChannelActionsContext()"></ng-container>
+  </ng-container>
+</div>

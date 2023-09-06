@@ -1,0 +1,23 @@
+<ng-template
+  #defaultAvatar
+  let-name="name"
+  let-imageUrl="imageUrl"
+  let-size="size"
+  let-type="type"
+  let-channel="channel"
+  let-user="user"
+  let-location="location"
+>
+  <app-avatar
+    [name]="name"
+    [imageUrl]="imageUrl"
+    [size]="size"
+    [type]="type"
+    [channel]="channel"
+    [user]="user"
+    [location]="location"
+  ></app-avatar>
+</ng-template>
+<ng-container
+  *ngTemplateOutlet="(customTemplatesService.avatarTemplate$ | async) || defaultAvatar; context: getAvatarContext()"
+></ng-container>

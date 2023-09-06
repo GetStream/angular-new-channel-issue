@@ -1,0 +1,106 @@
+<div #scrollContainer data-testid="scroll-container" class="str-chat__list" (scroll)="scrolled()">
+  <div class="str-chat__reverse-infinite-scroll str-chat__message-list-scroll">
+    <ul class="str-chat__ul" [class.str-chat__message-options-in-bubble]="messageOptionsTrigger === 'message-bubble'">
+      <li
+        #parentMessageElement
+        *ngIf="mode === 'thread'"
+        data-testid="parent-message"
+        class="str-chat__parent-message-li"
+      >
+        <ng-container *ngTemplateOutlet="messageTemplateContainer; context: { message: parentMessage }"></ng-container>
+        <div data-testid="reply-count" class="str-chat__thread-start">
+          {{parentMessage?.reply_count === 1 ? ('streamChat.1 reply' | translate) : ('streamChat.{{ replyCount }}
+          replies' | translate:replyCountParam)}}
+        </div>
+      </li>
+      <app-loading-indicator
+        *ngIf="isLoading && direction === 'bottom-to-top'"
+        data-testid="top-loading-indicator"
+      ></app-loading-indicator>
+      <li
+        *ngFor="let message of messages$ | async; let i = index; trackBy: trackByMessageId"
+        tabindex="0"
+        data-testclass="message"
+        class="str-chat__li str-chat__li--{{ groupStyles[i] }}"
+        id="{{ message.id }}"
+      >
+        <ng-container *ngIf="shouldDisplayDateSeparator(message)">
+          <app-date-separator [date]="message.created_at" [shouldParse]="shouldParse"></app-date-separator>
+        </ng-container>
+        <ng-container *ngTemplateOutlet="messageTemplateContainer; context: { message: message }"></ng-container>
+      </li>
+      <app-loading-indicator
+        *ngIf="isLoading && direction === 'top-to-bottom'"
+        data-testid="bottom-loading-indicator"
+      ></app-loading-indicator>
+    </ul>
+    <ng-template #defaultTypingIndicator let-usersTyping$="usersTyping$">
+      <!-- eslint-disable-next-line @angular-eslint/template/no-any -->
+      <ng-container *ngIf="$any(usersTyping$ | async) as users">
+        <div
+          *ngIf="users.length > 0"
+          data-testid="typing-indicator"
+          class="str-chat__typing-indicator str-chat__typing-indicator--typing"
+        >
+          <div class="str-chat__typing-indicator__dots">
+            <span class="str-chat__typing-indicator__dot"></span>
+            <span class="str-chat__typing-indicator__dot"></span>
+            <span class="str-chat__typing-indicator__dot"></span>
+          </div>
+          <div data-testid="typing-users" class="str-chat__typing-indicator__users">
+            {{
+              users.length === 1
+                ? ('streamChat.user is typing' | translate : { user: getTypingIndicatorText(users) })
+                : ('streamChat.users are typing' | translate : { users: getTypingIndicatorText(users) })
+            }}
+          </div>
+        </div>
+      </ng-container>
+    </ng-template>
+    <ng-container
+      *ngTemplateOutlet="typingIndicatorTemplate || defaultTypingIndicator; context: getTypingIndicatorContext()"
+    ></ng-container>
+  </div>
+</div>
+<div class="str-chat__jump-to-latest-message">
+  <button
+    *ngIf="isUserScrolled"
+    data-testid="scroll-to-latest"
+    class="str-chat__message-notification-scroll-to-latest str-chat__message-notification-scroll-to-latest-right str-chat__circle-fab"
+    (keyup.enter)="jumpToLatestMessage()"
+    (click)="jumpToLatestMessage()"
+  >
+    <app-icon
+      class="str-chat__jump-to-latest-icon str-chat__circle-fab-icon"
+      [icon]="direction === 'bottom-to-top' ? 'arrow-down' : 'arrow-up'"
+    ></app-icon>
+    <div
+      *ngIf="unreadMessageCount > 0"
+      class="str-chat__message-notification str-chat__message-notification-scroll-to-latest-unread-count str-chat__jump-to-latest-unread-count"
+    >
+      {{ unreadMessageCount }}
+    </div>
+  </button>
+</div>
+
+<ng-template #messageTemplateContainer let-message="message">
+  <ng-template
+    #defaultMessageTemplate
+    let-messageInput="message"
+    let-isLastSentMessage="isLastSentMessage"
+    let-enabledMessageActions="enabledMessageActions"
+    let-mode="mode"
+    let-isHighlighted="isHighlighted"
+  >
+    <app-message
+      [message]="messageInput"
+      [isLastSentMessage]="isLastSentMessage"
+      [enabledMessageActions]="enabledMessageActions"
+      [mode]="mode"
+      [isHighlighted]="isHighlighted"
+    ></app-message>
+  </ng-template>
+  <ng-container
+    *ngTemplateOutlet="messageTemplate || defaultMessageTemplate; context: getMessageContext(message)"
+  ></ng-container>
+</ng-template>

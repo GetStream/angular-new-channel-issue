@@ -1,0 +1,11 @@
+::ng-deep .str-chat__thread {
+  .str-chat__edit-message-form .str-chat__edit-message-close {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    z-index: 1;
+  }
+  .thread-edit {
+    margin: 0 -10px 0 -77px;
+  }
+}

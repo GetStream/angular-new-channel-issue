@@ -1,0 +1,45 @@
+@use '../../../../../../styles/variables';
+
+app-channel {
+  ::ng-deep .str-chat {
+    height: auto;
+
+    .str-chat__container {
+      margin-top: 0;
+      height: calc(100vh - 365px) !important;
+    }
+
+    .str-chat__input-flat {
+      padding: 8px 0 6px 45px;
+    }
+
+    .str-chat__fileupload-wrapper .rfu-file-upload-button {
+      top: calc(100% - 48px);
+    }
+
+    .str-chat__input-flat--textarea-wrapper .str-chat__fileupload-wrapper .str-chat__tooltip {
+      bottom: 60px;
+      right: 5px;
+    }
+
+    .str-chat__edit-message-form {
+      .str-chat__send-button {
+        margin: 0 5px 0 -10px;
+      }
+    }
+    .str-chat__edit-message-form .str-chat__edit-message-close {
+      position: absolute;
+      top: 22px;
+      right: 40px;
+      z-index: 1;
+    }
+
+    @media screen and (max-width: 960px) {
+      height: auto;
+
+      .str-chat__input-flat {
+        padding: 8px 60px 6px 45px;
+      }
+    }
+  }
+}

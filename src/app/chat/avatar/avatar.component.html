@@ -1,0 +1,33 @@
+<div
+  class="str-chat__avatar str-chat__avatar--circle stream-chat__avatar--{{ location }}"
+  title="{{ name }}"
+  [style]="{
+    flexBasis: 'calc(var(--str-chat__spacing-px, 1px) * ' + size + ')',
+    fontSize: 'calc(var(--str-chat__spacing-px, 1px) * ' + size / 2 + ')',
+    height: 'calc(var(--str-chat__spacing-px, 1px) * ' + size + ')',
+    lineHeight: 'calc(var(--str-chat__spacing-px, 1px) * ' + size + ')',
+    width: 'calc(var(--str-chat__spacing-px, 1px) * ' + size + ')'
+  }"
+>
+  <img
+    *ngIf="(imageUrl || fallbackChannelImage || groupDefaultAvatar) && !isError; else fallback"
+    class="str-chat__avatar-image str-chat__avatar-image{{ isLoaded ? ' str-chat__avatar-image--loaded' : '' }}"
+    src="{{ imageUrl || fallbackChannelImage || groupDefaultAvatar }}"
+    alt="{{ initials }}"
+    data-testid="avatar-img"
+    [style]="{
+      flexBasis: 'calc(var(--str-chat__spacing-px, 1px) * ' + size + ')',
+      height: 'calc(var(--str-chat__spacing-px, 1px) * ' + size + ')',
+      objectFit: 'cover',
+      width: 'calc(var(--str-chat__spacing-px, 1px) * ' + size + ')'
+    }"
+    (load)="isLoaded = true"
+    (error)="isError = true"
+  />
+  <ng-template #fallback>
+    <div data-testid="fallback-img" class="str-chat__avatar-fallback">
+      {{ initials }}
+    </div>
+  </ng-template>
+  <div data-testid="online-indicator" *ngIf="isOnline" class="str-chat__avatar--online-indicator"></div>
+</div>

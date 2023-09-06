@@ -1,0 +1,23 @@
+<div class="str-chat__thread-container">
+  <ng-container
+    *ngTemplateOutlet="
+      (customTemplatesService.threadHeaderTemplate$ | async) || defaultThreadHeader;
+      context: getThreadHeaderContext()
+    "
+  ></ng-container>
+  <ng-content></ng-content>
+</div>
+
+<ng-template #defaultThreadHeader let-parentMessage="parentMessage" let-closeThreadHandler="closeThreadHandler">
+  <div class="str-chat__thread-header">
+    <div class="str-chat__thread-header-details">
+      <div class="str-chat__thread-header-name" translate>streamChat.Thread</div>
+      <div class="str-chat__thread-header-channel-name" data-testid="channel-name">
+        {{ channelName }}
+      </div>
+    </div>
+    <button class="back-button" theme="transparent" (click)="closeThreadHandler()">
+      {{ 'action.back' | translate }}
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,11 @@
+<textarea
+  #input
+  autofocus
+  data-testid="textarea"
+  placeholder="{{ placeholder | translate }}"
+  class="rta__textarea str-chat__textarea__textarea str-chat__angular-textarea str-chat__message-textarea"
+  rows="5"
+  [value]="value || ''"
+  (input)="inputChanged()"
+  (keydown.enter)="enterHit($event)"
+></textarea>

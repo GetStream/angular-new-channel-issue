@@ -1,4 +1,4 @@
-<div id="root">
+<!-- <div id="root">
   <stream-channel-list></stream-channel-list>
   <stream-channel>
     <stream-channel-header></stream-channel-header>
@@ -10,4 +10,13 @@
       <stream-message-input mode="thread"></stream-message-input>
     </stream-thread>
   </stream-channel>
-</div>
+</div> -->
+
+<h1>App</h1>
+
+<ul>
+  <li *ngFor="let user of users">
+    {{ user.name }}
+    <button (click)="selectUser(user)">Chat</button>
+  </li>
+</ul>

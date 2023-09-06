@@ -1,0 +1,97 @@
+<div
+  *ngIf="existingReactions.length > 0"
+  class="str-chat__reaction-list str-chat__message-reactions-container"
+  data-testid="reaction-list"
+  [class.str-chat__reaction-list--reverse]="true"
+  [class.str-chat__reaction-list-hidden]="isSelectorOpen"
+>
+  <ul class="str-chat__message-reactions">
+    <li
+      *ngFor="let reactionType of existingReactions; trackBy: trackByMessageReaction"
+      class="str-chat__message-reaction"
+      data-testclass="emoji"
+      [class.str-chat__message-reaction-own]="isOwnReaction(reactionType)"
+      [popper]="popperContent"
+      [popperTrigger]="popperTriggerHover"
+      [popperPlacement]="popperPlacementAuto"
+      [popperHideOnScroll]="false"
+      [popperHideOnClickOutside]="false"
+      (hover)="$event.stopPropagation()"
+    >
+      <popper-content #popperContent>
+        <div data-testclass="tooltip" class="str-chat__tooltip str-chat__tooltip-angular">
+          <span>
+            {{ getUsersByReaction(reactionType) }}
+          </span>
+        </div>
+      </popper-content>
+      <span class="emoji str-chat__message-reaction-emoji"> {{ getEmojiByReaction(reactionType) }}&nbsp; </span>
+      <span data-testclass="reaction-list-reaction-count" class="str-chat__message-reaction-count">
+        {{ messageReactionCounts[reactionType] }}
+      </span>
+    </li>
+    <li>
+      <span data-testid="reactions-count" class="str-chat__reaction-list--counter">{{ reactionsCount }}</span>
+    </li>
+  </ul>
+</div>
+
+<div
+  #selectorContainer
+  *ngIf="isSelectorOpen"
+  class="str-chat__reaction-selector str-chat__message-reaction-selector"
+  data-testid="reaction-selector"
+>
+  <div
+    #selectorTooltip
+    *ngIf="tooltipText"
+    data-testid="tooltip"
+    class="str-chat__reaction-selector-tooltip"
+    [ngStyle]="{
+      left: tooltipPositions?.tooltip + 'px',
+      visibility: tooltipPositions ? 'visible' : 'hidden'
+    }"
+  >
+    <div class="arrow" [ngStyle]="{ left: tooltipPositions?.arrow + 'px' }"></div>
+    <span class="latest-user-username">
+      {{ tooltipText }}
+    </span>
+  </div>
+  <ul class="str-chat__message-reactions-list str-chat__message-reactions-options">
+    <li
+      *ngFor="let reactionType of reactionOptions; trackBy: trackByMessageReaction"
+      class="str-chat__message-reactions-option str-chat__message-reactions-list-item str-chat__emoji"
+      data-testclass="emoji-option"
+      [class.str-chat__message-reactions-option-selected]="isOwnReaction(reactionType)"
+      (click)="react(reactionType)"
+      (keyup.enter)="react(reactionType)"
+    >
+      <div
+        *ngIf="getLatestUserByReaction(reactionType) as user"
+        class="latest-user str-chat__message-reactions-last-user"
+        attr.data-testid="{{ reactionType }}-last-user"
+        (click)="hideTooltip()"
+        (keyup.enter)="hideTooltip()"
+        (mouseenter)="showTooltip($event, reactionType)"
+        (mouseleave)="hideTooltip()"
+      >
+        <app-avatar-placeholder
+          attr.data-testid="{{ reactionType }}-avatar"
+          [imageUrl]="user.image"
+          [name]="user.name || user.id"
+          [size]="20"
+        ></app-avatar-placeholder>
+      </div>
+      <span class="emoji str-chat__emoji-selector-emoji-angular str-chat__message-reaction-emoji">
+        {{ getEmojiByReaction(reactionType) }}
+      </span>
+      <span
+        *ngIf="messageReactionCounts[reactionType] && messageReactionCounts[reactionType]! > 0"
+        class="str-chat__message-reactions-list-item__count"
+        attr.data-testid="{{ reactionType }}-reaction-count"
+      >
+        {{ messageReactionCounts[reactionType] }}
+      </span>
+    </li>
+  </ul>
+</div>

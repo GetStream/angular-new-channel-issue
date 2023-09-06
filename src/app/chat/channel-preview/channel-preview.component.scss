@@ -1,0 +1,24 @@
+.ns-chat-last-message-info {
+  display: flex;
+  align-items: center;
+
+  img,
+  svg {
+    margin-right: 5px;
+  }
+}
+
+.ns-chat-message-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.visibity {
+  visibility: visible;
+
+  @media screen and (max-width: 960px) {
+    visibility: hidden;
+  }
+}

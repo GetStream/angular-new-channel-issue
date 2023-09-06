@@ -1,0 +1,54 @@
+<button
+  class="str-chat__channel-preview-messenger str-chat__channel-preview"
+  data-testid="channel-preview-container"
+  [class.str-chat__channel-preview-messenger--active]="isActive"
+  [class.str-chat__channel-preview--active]="isActive"
+  [class.str-chat__channel-preview-messenger--unread]="isUnread"
+  (click)="setAsActiveChannel()"
+>
+  <div class="str-chat__channel-preview-messenger--left">
+    <app-avatar-placeholder
+      name="{{ avatarName }}"
+      imageUrl="{{ avatarImage }}"
+      type="channel"
+      location="channel-preview"
+      [channel]="channel"
+      [size]="56"
+    ></app-avatar-placeholder>
+  </div>
+  <div class="str-chat__channel-preview-messenger--right str-chat__channel-preview-end visibity">
+    <div class="str-chat__channel-preview-end-first-row">
+      <div class="str-chat__channel-preview-messenger--name">
+        <span data-testid="channel-preview-title">{{ title }}</span>
+      </div>
+      <div data-testid="unread-badge" *ngIf="unreadCount" class="str-chat__channel-preview-unread-badge">
+        {{ unreadCount }}
+      </div>
+    </div>
+    <div data-testid="latest-message" class="str-chat__channel-preview-messenger--last-message">
+      <div class="ns-chat-message-text">
+        {{ latestMessage | translate }}
+      </div>
+      <div class="ns-chat-last-message-info">
+        <svg
+          *ngIf="isUnread"
+          data-testid="delivered-icon"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M8.9999 16.2L4.7999 12L3.3999 13.4L8.9999 19L20.9999 6.99998L19.5999 5.59998L8.9999 16.2Z"
+            fill="black"
+          />
+        </svg>
+        <img *ngIf="!isUnread" src="../../../../../../../assets/img/chat/read-message-icon.png" />
+        <p class="ns-text-small">{{ lastMessageDate }}</p>
+      </div>
+    </div>
+  </div>
+</button>

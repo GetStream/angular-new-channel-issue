@@ -1,0 +1,145 @@
+<div class="ns-page-body">
+  <header class="ns-header max-width">
+    <h3>{{ 'organization.chat' | translate }}</h3>
+    <!-- <button theme="dark" size="small" icon="add_comment" (click)="isStartNewChannelModal = !isStartNewChannelModal">
+      {{ 'chat.new_chat' | translate }}
+    </button> -->
+  </header>
+
+  <!-- <form [formGroup]="searchChatForm" class="ns-form ns-light">
+    <div class="ns-filters-wrapper">
+      <div class="ns-search-wrapper">
+        <mdc-form-field [fluid]="true" class="ns-no-gap max-width">
+          <mdc-text-field
+            [label]="'miscellaneous.search_by_name' | translate"
+            autocomplete="off"
+            [outlined]="true"
+            formControlName="channelName"
+          >
+            <mdc-icon *ngIf="!searchChatForm.value['channelName']" mdcTextFieldIcon [trailing]="true">search</mdc-icon>
+            <mdc-icon
+              *ngIf="searchChatForm.value['channelName']"
+              mdcTextFieldIcon
+              [trailing]="true"
+              [attr.clickable]="true"
+              (click)="searchChatForm.controls.channelName.reset('')"
+            >
+              clear
+            </mdc-icon>
+          </mdc-text-field>
+          <mdc-helper-text>{{ 'member_list.min_2_characters' | translate }}</mdc-helper-text>
+        </mdc-form-field>
+      </div>
+    </div>
+  </form> -->
+
+  <div *ngIf="!isEmptyState">
+    <app-channel-list class="channel-list"></app-channel-list>
+    <app-channel class="channel">
+      <app-channel-header></app-channel-header>
+      <app-message-list></app-message-list>
+      <app-message-input></app-message-input>
+      <app-thread class="thread" name="thread">
+        <app-message-list name="thread-message-list" mode="thread"></app-message-list>
+        <app-message-input mode="thread" name="thread-message-input"></app-message-input>
+      </app-thread>
+    </app-channel>
+  </div>
+  <!-- <app-loader *ngIf="isLoading.value"></app-loader> -->
+  <div *ngIf="isEmptyState" class="empty-state">
+    <img
+      src="/assets/img/empty-states/chat/chat-empty-state.svg"
+      width="351"
+      height="273"
+      alt="{{ 'img_alt.hoopit_logo' | translate }}"
+    />
+    <h3 class="empty-state-header">{{ 'chat.no_chats' | translate }}</h3>
+    <p class="empty-state-description">{{ 'chat.start_conversations' | translate }}</p>
+  </div>
+</div>
+
+<!-- <app-popup *ngIf="isStartNewChannelModal" (popupClose)="isStartNewChannelModal = false">
+  <h3 class="popup__header">
+    <span>{{ 'chat.create_new_chat_with' | translate }}</span>
+    <div class="popup__header-button-wrapper">
+      <div class="popup__header-buttons">
+        <button
+          mdc-icon-button
+          icon="close"
+          class="material-icons-round"
+          (click)="isStartNewChannelModal = false"
+        ></button>
+      </div>
+    </div>
+  </h3>
+  <div class="popup__body ns-form ns-light">
+    <app-expand-y class="ns-search-by-name-wrapper ns-expandable-field-wrapper">
+      <form [formGroup]="searchForm">
+        <mdc-form-field class="ns-expandable-field ns-no-gap" [fluid]="true">
+          <mdc-text-field
+            [label]="'add_user.enter_name' | translate"
+            formControlName="name"
+            [required]="true"
+            autocomplete="off"
+            [outlined]="true"
+          ></mdc-text-field>
+        </mdc-form-field>
+      </form>
+
+      <app-expand-y *ngIf="userList.length || searchLoading || noUserFound" class="ns-search-results-expand">
+        <div class="ns-search-results-wrapper">
+          <app-loader *ngIf="searchLoading" [diameter]="50"></app-loader>
+
+          <div *ngIf="noUserFound" class="ns-empty-state">
+            <p class="ns-subtitle">{{ 'chat.no_users_found' | translate }}</p>
+            <p class="ns-text small">{{ 'chat.no_users_found_hint' | translate }}</p>
+          </div>
+
+          <ul *ngIf="userList.length" class="ns-search-results ns-list">
+            <li
+              *ngFor="let user of userList"
+              class="ns-list__item"
+              [class.ns-list__item--selected]="user.id === selectedUser?.id"
+            >
+              <button
+                class="ns-list__button ns-list__button--no-shadow"
+                type="button"
+                appBlurOnClick
+                (click)="selectUser(user)"
+              >
+                <div class="ns-avatar-wrapper">
+                  <app-profile-picture [user]="user"></app-profile-picture>
+                  <app-user-activation-status
+                    [status]="user.activation_status"
+                    [supervised]="user.supervised_by_parents"
+                    [textHover]="true"
+                    [hasEmail]="!!user.email"
+                  ></app-user-activation-status>
+                </div>
+                <div class="ns-user-details">
+                  <p class="ns-name ns-subtitle small">{{ user.first_name }} {{ user.last_name }}</p>
+                  <p *ngIf="user.email" class="ns-text extra-small">
+                    {{ 'user_attributes.email' | translate }}: {{ user.email }}
+                  </p>
+                  <p *ngIf="user.date_of_birth" class="ns-text extra-small">
+                    {{ 'user_search_form.born' | translate }}: {{ user.date_of_birth | birthYearAndAge }}
+                  </p>
+                </div>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </app-expand-y>
+
+      <div class="popup__button-wrapper">
+        <button
+          size="small"
+          [disabled]="searchLoading || (userList.length && !selectedUser) || !userList.length"
+          (click)="startChat()"
+        >
+          {{ 'chat.start_chat' | translate }}
+        </button>
+      </div>
+    </app-expand-y>
+  </div>
+</app-popup> -->

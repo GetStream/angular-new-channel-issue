@@ -1,0 +1,37 @@
+<div
+  #actionBox
+  data-testid="action-box"
+  class="str-chat__message-actions-box str-chat__message-actions-box-angular"
+  [class.str-chat__message-actions-box--open]="true"
+>
+  <ul class="str-chat__message-actions-list">
+    <ng-container *ngFor="let item of visibleMessageActionItems; trackBy: trackByActionName">
+      <ng-container
+        *ngTemplateOutlet="messageActionItemTemplate || defaultMessageActionItem; context: item"
+      ></ng-container>
+    </ng-container>
+  </ul>
+</div>
+
+<ng-template
+  #defaultMessageActionItem
+  let-actionName="actionName"
+  let-actionHandler="actionHandler"
+  let-actionLabelOrTranslationKey="actionLabelOrTranslationKey"
+>
+  <button
+    class="str-chat__message-actions-list-item-button"
+    [attr.data-testid]="actionName + '-action'"
+    (click)="actionHandler(message, isMine)"
+  >
+    <li class="str-chat__message-actions-list-item">
+      {{ getActionLabel(actionLabelOrTranslationKey) | translate }}
+    </li>
+  </button>
+</ng-template>
+
+<ng-container *ngTemplateOutlet="modalTemplate || defaultModal; context: getEditModalContext()"></ng-container>
+
+<ng-template #defaultModal let-isOpen="isOpen" let-isOpenChangeHandler="isOpenChangeHandler" let-content="content">
+  <stream-modal [isOpen]="isOpen" [content]="content" (isOpenChange)="isOpenChangeHandler($event)"> </stream-modal>
+</ng-template>
