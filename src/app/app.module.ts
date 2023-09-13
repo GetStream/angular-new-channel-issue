@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { TranslateLoader, TranslateModule, TranslateModuleConfig } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import {
   StreamChatModule,
   StreamAutocompleteTextareaModule,
@@ -52,6 +54,8 @@ const TRANSLATE_MODULE_CONFIG: TranslateModuleConfig = {
     BrowserModule,
     HttpClientModule,
     TranslateModule.forRoot(TRANSLATE_MODULE_CONFIG),
+    BrowserAnimationsModule,
+    MatBottomSheetModule,
     StreamAutocompleteTextareaModule,
     StreamChatModule,
     ChatModule

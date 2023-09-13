@@ -24,7 +24,7 @@ const API_KEY_STAGING = '5gbpz49wttxx'
 export class ChatService {
   // @Select(GlobalState.currentLanguage) currentLanguage: Observable<Languages>
   // @SelectSnapshot(DashboardState.user) currentUser: CurrentUserResponse
-  selectedUser = localStorage.getItem('selectedUser') ? JSON.parse(localStorage.getItem('selectedUser')!) : null
+  // selectedUser = localStorage.getItem('selectedUser') ? JSON.parse(localStorage.getItem('selectedUser')!) : null
 
   channels: Channel<DefaultStreamChatGenerics>[] = []
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false)
@@ -76,13 +76,13 @@ export class ChatService {
     })
   }
 
-  async createChannel(userUUID: string): Promise<ChannelAPIResponse<DefaultStreamChatGenerics>> {
+  async createChannel(myId: string, userUUID: string): Promise<ChannelAPIResponse<DefaultStreamChatGenerics>> {
     const channel = this.chatClientService.chatClient.channel(ChatType.Messaging, {
       watch: true,
       state: true,
       presence: true,
       shouldSetActiveChannel: true,
-      members: [this.selectedUser.uuid, userUUID]
+      members: [myId, userUUID]
     })
     return await channel.create()
   }

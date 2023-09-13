@@ -9,7 +9,13 @@ export class AuthService {
   constructor(private requestService: RequestService) {}
 
   getStreamToken(): Observable<string> {
-    const url = `https://api.staging.hoopit.io/web/users/stream-token/`
-    return this.requestService.request('GET', url).pipe(map((tokenResponse) => tokenResponse.stream_token))
+    // const url = `https://api.staging.hoopit.io/web/users/stream-token/`
+    // return this.requestService.request('GET', url).pipe(map((tokenResponse) => tokenResponse.stream_token))
+    return new Observable((s) => {
+      setTimeout(() => {
+        s.next('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiaWx5YTIifQ.zvKmMDeWNg4ZPXGQlRAERabRnnehRUuHgQR5Hnjf1xo')
+        s.complete()
+      }, 500)
+    })
   }
 }
