@@ -27,7 +27,13 @@ export class AppComponent implements OnInit {
   users: User[] = [
     { id: 2, name: 'User 2', uuid: 'fb3199c0-cedb-42c8-9e7f-5be9f8bb6d17' },
     { id: 3, name: 'User 3', uuid: 'bd67757a-4e3a-4e9a-b370-19daf2956d90' },
-    { id: 4, name: 'User 4', uuid: '7838792a-6ec9-4389-9a6c-8a9981ea5a73' }
+    { id: 4, name: 'User 4', uuid: '7838792a-6ec9-4389-9a6c-8a9981ea5a73' },
+    { id: 5, name: 'User 5', uuid: '6a506972-9790-4bf2-a9da-e6f1348bfcd7' },
+    { id: 6, name: 'User 6', uuid: 'f82a5fe7-6709-482d-84ec-dea89cdf2fa2' },
+    { id: 7, name: 'User 7', uuid: 'acbf0078-d901-4719-9f1d-c0359347a1f8' },
+    { id: 8, name: 'User 8', uuid: '22f36873-3b33-4287-968c-7b23ea0eca31' },
+    { id: 9, name: 'User 9', uuid: 'efbebccd-ba76-4dc9-a2f2-6df68e782ddf' },
+    { id: 10, name: 'User 10', uuid: '1a6a8cae-87fe-4324-82ab-2d289c40d297' }
   ]
   selectedUser: User | null = null
 
